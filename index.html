@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html class="h-full">
-  <title>DB - Debugger</title>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DB - Monetization Configurator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
   <head>
     <script>
       async function generateSignature() {
@@ -67,17 +68,17 @@
     </script>
   </head>
 
-  <body class="h-full w-full">
+  <body class="w-full">
     <nav class="flex-shrink-0 bg-black">
       <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
           <!-- Logo section -->
           <div class="flex items-center px-2 lg:px-0 xl:w-64">
-            <div class="flex-shrink-0">
+            <div class="flex-shrink-0 ml-8">
               <img
                 class="h-8 w-auto"
                 src="https://app.darkblock.io/images/footericon.svg"
-                alt="Your Company"
+                alt="Darkblock"
               />
             </div>
           </div>
@@ -85,177 +86,185 @@
       </div>
     </nav>
 
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        NFT ID:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="text"
-        name="nftid"
-        id="nftid"
-        value="FijaYEdpF1m5Eiph7M1Pg7PmhSSZA22TujaKrj1hEEDx"
-        size="65"
-        style="max-width: 100%"
-      />
+    <div class="flex w-full mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
+      <div class="w-1/2">
+        <div class="w-full px-4 mt-6 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            NFT ID:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="text"
+            name="nftid"
+            id="nftid"
+            value="FijaYEdpF1m5Eiph7M1Pg7PmhSSZA22TujaKrj1hEEDx"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>
+    
+        <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            NFT-Creator:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="contract"
+            name="nftcreator"
+            id="nftcreator"
+            value="9sUnEsLPa6uENMd6MBFMWYXAXDdTadj4nnxSoX93gg8t"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>
+    
+        <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            Platform:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="contract"
+            name="platform"
+            id="platform"
+            value="Solana"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>
+    
+        <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            Monetization-Type:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="contract"
+            name="monetizationtype"
+            id="monetizationtype"
+            value="Rental"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>        
+      </div>
+      <div class="w-1/2">
+        <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            Min-Price:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="contract"
+            name="minprice"
+            id="minprice"
+            value="1"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>
+    
+        <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            Min-Price-Currency:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="contract"
+            name="minpricecurrency"
+            id="minpricecurrency"
+            value="USD"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>
+    
+        <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            Max-Period:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="contract"
+            name="maxperiod"
+            id="maxperiod"
+            value="1440"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>
+    
+        <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+          <label
+            class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+            for="grid-first-name"
+          >
+            Royalties:
+          </label>
+          <input
+            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            type="contract"
+            name="royalties"
+            id="royalties"
+            value="{ '9sUnEsLPa6uENMd6MBFMWYXAXDdTadj4nnxSoX93gg8t': '50' }"
+            size="65"
+            style="max-width: 100%"
+          />
+        </div>        
+      </div>
     </div>
 
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        NFT-Creator:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="contract"
-        name="nftcreator"
-        id="nftcreator"
-        value="9sUnEsLPa6uENMd6MBFMWYXAXDdTadj4nnxSoX93gg8t"
-        size="65"
-        style="max-width: 100%"
-      />
-    </div>
-
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Platform:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="contract"
-        name="platform"
-        id="platform"
-        value="Solana"
-        size="65"
-        style="max-width: 100%"
-      />
-    </div>
-
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Monetization-Type:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="contract"
-        name="monetizationtype"
-        id="monetizationtype"
-        value="Rental"
-        size="65"
-        style="max-width: 100%"
-      />
-    </div>
-
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Min-Price:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="contract"
-        name="minprice"
-        id="minprice"
-        value="1"
-        size="65"
-        style="max-width: 100%"
-      />
-    </div>
-
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Min-Price-Currency:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="contract"
-        name="minpricecurrency"
-        id="minpricecurrency"
-        value="USD"
-        size="65"
-        style="max-width: 100%"
-      />
-    </div>
-
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Max-Period:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="contract"
-        name="maxperiod"
-        id="maxperiod"
-        value="1440"
-        size="65"
-        style="max-width: 100%"
-      />
-    </div>
-
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Royalties:
-      </label>
-      <input
-        class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        type="contract"
-        name="royalties"
-        id="royalties"
-        value="{ '9sUnEsLPa6uENMd6MBFMWYXAXDdTadj4nnxSoX93gg8t': '50' }"
-        size="65"
-        style="max-width: 100%"
-      />
-    </div>
-
+    <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
     <input
       id="search-button"
       type="button"
       onclick="generateSignature()"
       value="Generate Signature"
-      style="max-width: 100%; margin-top: 20px"
-      class="w-full bg-gradient-to-b from-gray-900 to-gray-500 hover:bg-gray-800 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline"
+      class="mx-4 px-16 mt-6 bg-gradient-to-b from-gray-900 to-gray-500 hover:bg-gray-800 text-white font-bold py-3 rounded"
     />
 
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+    <h2 class="mt-10 px-4">You will need these two pieces of signed data below to post through the <a class="underline" href="https://docs.darkblock.io/openapi/core/tag/Darkblock-API/#tag/Darkblock-API/operation/monetize-nft">Monetization API endpoint</a> to register your creator terms.</h2>
+    <div class="w-full mt-6 px-4 mb-6 md:mb-0">
       <label
         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
         for="grid-first-name"
       >
         Signature:
       </label>
-      <p id="outputsignature"></p>
+      <p class="bg-gray-200 p-6 rounded" id="outputsignature"></p>
     </div>
 
-    <div class="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+    <div class="w-full mt-6 px-4 mb-6 md:mb-0">
       <label
         class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
         for="grid-first-name"
       >
         Configs:
       </label>
-      <p id="outputconfigs"></p>
+      <p class="bg-gray-200 p-6 rounded" id="outputconfigs"></p>
     </div>
+
+  </div>
   </body>
 </html>
