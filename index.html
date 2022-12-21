@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html class="h-full">
   <title>DB - Monetization Configurator</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <head>
     <script>
@@ -21,8 +21,6 @@
           `${nftid}${nftcreator}${platform}${monetizationtype}${minprice}${minpricecurrency}${maxperiod}${royalties}`
         );
 
-        window.phantom.solana.connect();
-
         const data = [
           {
             "NFT-Id": `${nftid}`,
@@ -39,14 +37,26 @@
         let signatureData = JSON.stringify(data);
         const datawoSpaces = signatureData.replace(/\s+/g, "");
         const dataHash = await hash(datawoSpaces); // '2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae'
-        const encodedMessage = new TextEncoder().encode(dataHash);
-        const signedMessage = await window.solana.signMessage(
-          encodedMessage,
-          "utf8"
-        );
-        const signature = btoa(
-          String.fromCharCode.apply(null, signedMessage.signature)
-        );
+        let signature;
+        if (platform === "Solana" || platform === "Solana-Devnet") {
+          //sol:phantom
+          window.phantom.solana.connect();
+          const encodedMessage = new TextEncoder().encode(dataHash);
+          const signedMessage = await window.solana.signMessage(
+            encodedMessage,
+            "utf8"
+          );
+          signature = btoa(
+            String.fromCharCode.apply(null, signedMessage.signature)
+          );
+        } else {
+          //evms:metamask
+          if (typeof window.ethereum === "undefined") {
+            alert("metamask not installed");
+          }
+          signature = await signTypedData(dataHash, window.ethereum, platform);
+        }
+
         delete data[0]["NFT-Id"];
         delete data[0]["NFT-Creator"];
         delete data[0]["Platform"];
@@ -55,6 +65,95 @@
         document.getElementById("outputsignature").innerHTML = signature;
         document.getElementById("outputconfigs").innerHTML = configsStr;
       }
+
+      const signTypedData = async (
+        data,
+        w3,
+        platform = "Ethereum",
+        network = null
+      ) => {
+        platform = platform.toLowerCase();
+
+        let chainId = 1; //ethereum default
+        if (platform === "rinkeby") chainId = 4;
+        if (platform === "ethereum-goerli") chainId = 5;
+        if (platform === "polygon") chainId = 137;
+        if (platform === "avalanche") chainId = 43114;
+
+        const address = await signInAndGetAccount(w3);
+        const msgParams = JSON.stringify({
+          domain: {
+            // Defining the chain aka Rinkeby testnet or Ethereum Main Net
+            chainId: chainId,
+            // Give a user friendly name to the specific contract you are signing for.
+            name: "Verifying Ownership",
+            // If name isn't enough add verifying contract to make sure you are establishing contracts with the proper entity
+            verifyingContract: address,
+            // Just let's you know the latest version. Definitely make sure the field name is correct.
+            version: "1",
+          },
+
+          // Defining the message signing data content.
+          message: {
+            /*
+         - Anything you want. Just a JSON Blob that encodes the data you want to send
+         - No required fields
+         - This is DApp Specific
+         - Be as explicit as possible when building out the message schema.
+        */
+            contents: data,
+          },
+          // Refers to the keys of the *types* object below.
+          primaryType: "Mail",
+          types: {
+            // TODO: Clarify if EIP712Domain refers to the domain the contract is hosted on
+            EIP712Domain: [
+              { name: "name", type: "string" },
+              { name: "version", type: "string" },
+              { name: "chainId", type: "uint256" },
+              { name: "verifyingContract", type: "address" },
+            ],
+
+            // Refer to PrimaryType
+            Mail: [{ name: "contents", type: "string" }],
+            // Not an EIP712Domain definition
+          },
+        });
+
+        return new Promise((resolve, reject) => {
+          try {
+            setTimeout(() => {
+              window.ethereum.sendAsync(
+                {
+                  method: "eth_signTypedData_v4",
+                  params: [address, msgParams],
+                  from: address,
+                },
+                async function (err, result) {
+                  if (err) reject(err);
+                  if (result.error) {
+                    reject(result.error.message);
+                  }
+                  resolve(result.result);
+                }
+              );
+            }, 1);
+          } catch (err) {
+            reject(err);
+          }
+        });
+      };
+
+      const signInAndGetAccount = async (w3) => {
+        try {
+          const accounts = await ethereum.request({
+            method: "eth_requestAccounts",
+          });
+          return accounts[0];
+        } catch (e) {
+          alert(`Please make sure you have Metamask installed : ${e.message}`);
+        }
+      };
 
       async function hash(string) {
         const utf8 = new TextEncoder().encode(string);
@@ -105,7 +204,7 @@
             style="max-width: 100%"
           />
         </div>
-    
+
         <div class="w-full mt-6 px-4 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -123,7 +222,7 @@
             style="max-width: 100%"
           />
         </div>
-    
+
         <div class="w-full mt-6 px-4 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -141,7 +240,7 @@
             style="max-width: 100%"
           />
         </div>
-    
+
         <div class="w-full mt-6 px-4 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -158,7 +257,7 @@
             size="65"
             style="max-width: 100%"
           />
-        </div>        
+        </div>
       </div>
       <div class="w-1/2">
         <div class="w-full mt-6 px-4 mb-6 md:mb-0">
@@ -178,7 +277,7 @@
             style="max-width: 100%"
           />
         </div>
-    
+
         <div class="w-full mt-6 px-4 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -196,7 +295,7 @@
             style="max-width: 100%"
           />
         </div>
-    
+
         <div class="w-full mt-6 px-4 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -214,7 +313,7 @@
             style="max-width: 100%"
           />
         </div>
-    
+
         <div class="w-full mt-6 px-4 mb-6 md:mb-0">
           <label
             class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -231,40 +330,47 @@
             size="65"
             style="max-width: 100%"
           />
-        </div>        
+        </div>
       </div>
     </div>
 
     <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
-    <input
-      id="search-button"
-      type="button"
-      onclick="generateSignature()"
-      value="Generate Signature"
-      class="mx-4 px-16 mt-6 bg-gradient-to-b from-gray-900 to-gray-500 hover:bg-gray-800 text-white font-bold py-3 rounded"
-    />
+      <input
+        id="search-button"
+        type="button"
+        onclick="generateSignature()"
+        value="Generate Signature"
+        class="mx-4 px-16 mt-6 bg-gradient-to-b from-gray-900 to-gray-500 hover:bg-gray-800 text-white font-bold py-3 rounded"
+      />
 
-    <h2 class="mt-10 px-4">You will need these two pieces of signed data below to post through the <a class="underline" href="https://docs.darkblock.io/openapi/core/tag/Darkblock-API/#tag/Darkblock-API/operation/monetize-nft">Monetization API endpoint</a> to register your creator terms.</h2>
-    <div class="w-full mt-6 px-4 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Signature:
-      </label>
-      <p class="bg-gray-200 p-6 rounded" id="outputsignature"></p>
+      <h2 class="mt-10 px-4">
+        You will need these two pieces of signed data below to post through the
+        <a
+          class="underline"
+          href="https://docs.darkblock.io/openapi/core/tag/Darkblock-API/#tag/Darkblock-API/operation/monetize-nft"
+          >Monetization API endpoint</a
+        >
+        to register your creator terms.
+      </h2>
+      <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="grid-first-name"
+        >
+          Signature:
+        </label>
+        <p class="bg-gray-200 p-6 rounded" id="outputsignature"></p>
+      </div>
+
+      <div class="w-full mt-6 px-4 mb-6 md:mb-0">
+        <label
+          class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+          for="grid-first-name"
+        >
+          Configs:
+        </label>
+        <p class="bg-gray-200 p-6 rounded" id="outputconfigs"></p>
+      </div>
     </div>
-
-    <div class="w-full mt-6 px-4 mb-6 md:mb-0">
-      <label
-        class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-        for="grid-first-name"
-      >
-        Configs:
-      </label>
-      <p class="bg-gray-200 p-6 rounded" id="outputconfigs"></p>
-    </div>
-
-  </div>
   </body>
 </html>
